@@ -1,27 +1,19 @@
+import { IpagesStatus } from '@/@types/PagesTypes'
 import { createStore } from 'vuex'
-import { getData } from '../services/api'
+import { getData, postData } from '../services/api'
 
-interface Page {
-  number: number;
-  sector: 'edição' | 'revisão';
-  worker: string;
-  status: 'aberto' | 'trabalhando' | 'concluido'
-}
-export interface IpagesStatus {
-  [index: number]: Page
-}
 const pagesStatus: IpagesStatus = []
 
 export default createStore({
   state: {
     totalPages: 0,
     pagesStatus,
-    day: 0
+    day: 0,
+    journalDays: ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo']
   },
   mutations: {
     updateData (state, res) {
-      console.log('update store')
-      state.pagesStatus = res.pageStatus
+      state.pagesStatus = res.pagesStatus
       state.totalPages = res.totalPages
     },
     resetData (state) {
@@ -33,6 +25,11 @@ export default createStore({
     getApiData (context, day) {
       context.commit('resetData')
       getData(day).then(res => {
+        context.commit('updateData', res)
+      })
+    },
+    postApiData (context, { Data, day }):void {
+      postData(Data, day).then(res => {
         context.commit('updateData', res)
       })
     }

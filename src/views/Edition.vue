@@ -1,6 +1,6 @@
 <template>
-    <div class="Revisao">
-        <h1>Revisão - A União ({{ worker.name }})</h1>
+    <div class="Edicao">
+        <h1>Edição - A União ({{ worker.name }})</h1>
         <div>
             <label for="weekDay">Selecione o jornal para ver um resumo: </label>
             <select v-model="daySelected" @change="selectDay">
@@ -25,7 +25,7 @@
             </tr>
             </thead>
             <tbody>
-            <revision-page v-for="(index) in (totalPages/2)" v-bind:key="index" :index="index" :worker="worker" :pagesStatus="pagesStatus" :totalPages="totalPages" />
+            <edition-page v-for="(index) in (totalPages/2)" v-bind:key="index" :index="index" :worker="worker" :pagesStatus="pagesStatus" :totalPages="totalPages" />
             </tbody>
         </table>
         </div>
@@ -33,8 +33,8 @@
 </template>
 
 <script lang="ts">
+import EditionPage from '@/components/EditionPage.vue'
 import Loading from '@/components/Loading.vue'
-import RevisionPage from '@/components/RevisionPage.vue'
 import { defineComponent } from 'vue'
 import store from '../store'
 
@@ -45,7 +45,7 @@ export default defineComponent({
       daySelected: -1,
       options: store.state.journalDays,
       worker: {
-        name: 'Revisor 1',
+        name: 'Fulano',
         id: 1,
         sector: 'edição'
       }
@@ -53,7 +53,7 @@ export default defineComponent({
   },
   components: {
     Loading,
-    RevisionPage
+    EditionPage
   },
   store,
   computed: {
@@ -71,16 +71,16 @@ export default defineComponent({
 })
 </script>
 <style scoped>
-.Revisao {
+.Edicao {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
-.Revisao h1 {
+.Edicao h1 {
   margin: 0;
 }
-.Revisao select {
+.Edicao select {
   padding: 5px;
   border-radius: 5px;
   outline: none;

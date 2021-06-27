@@ -1,6 +1,7 @@
 <template>
   <div class="Home">
     <div>
+      <h1>Redação - A União (Resumo)</h1>
       <label for="weekDay">Selecione o jornal para ver um resumo: </label>
         <select v-model="daySelected" @change="selectDay">
           <option value="-1">Selecione um dia</option>
@@ -34,14 +35,14 @@
 </template>
 
 <script lang="ts">
+import { IpagesStatus } from '@/@types/PagesTypes'
 import Loading from '@/components/Loading.vue'
 import ResumePage from '@/components/ResumePage.vue'
 import { defineComponent } from 'vue'
 import store from '../store'
-
 // const weekDays = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado']
 // const months = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']
-const journalDays = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo']
+// const journalDays = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo']
 
 export default defineComponent({
   name: 'Home',
@@ -52,7 +53,7 @@ export default defineComponent({
   data () {
     return {
       daySelected: -1,
-      options: journalDays
+      options: store.state.journalDays
     }
   },
   store,
@@ -61,10 +62,10 @@ export default defineComponent({
       store.dispatch('getApiData', this.daySelected)
       return ''
     },
-    totalPages () {
+    totalPages ():number {
       return store.state.totalPages
     },
-    pagesStatus () {
+    pagesStatus ():IpagesStatus {
       return store.state.pagesStatus
     }
   }
@@ -76,6 +77,9 @@ display: flex;
 flex-direction: column;
 justify-content: center;
 align-items: center;
+}
+.Home h1 {
+  margin: 0;
 }
 .Home select {
   padding: 5px;
@@ -92,7 +96,7 @@ align-items: center;
 animation: showPages 0.3s linear;
 background-color: #3a3a3a;
 border-radius: 5px;
-margin: 50px;
+margin: 10px;
 }
 .Pages table {
   border-radius: 5px;

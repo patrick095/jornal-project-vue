@@ -1,6 +1,7 @@
 <template>
   <div id="nav">
     <router-link to="/">Resumo</router-link> |
+    <router-link to="/edicao">Edição</router-link> |
     <router-link to="/revisao">Revisão</router-link>
   </div>
   <router-view/>
@@ -23,7 +24,6 @@ margin: 0;
   width: 100vw;
 }
 #nav {
-  padding: 30px;
   font-size: 22px;
 }
 
